@@ -38,9 +38,9 @@
     </div>
 	
 	<div id = "typeScreen" hidden>
-		<button onclick = "showProblem("subtraction")">subtraction</button>
-		<button onclick = "showProblem("factorable")">factorable</button>
-		<button onclick = "showProblem("mixed")">mixed</button>
+		<button onclick = "showProblem('subtraction')">subtraction</button>
+		<button onclick = "showProblem('factorable')">factorable</button>
+		<button onclick = "showProblem('mixed')">mixed</button>
 	</div>
 
     <div id="practiceScreen" hidden>
@@ -58,46 +58,49 @@
         let number1Candidates = [];
 		let number1;
 		let number2;
+		let numberDigits;
 
-        function twoByTwo() {
-			for (var i = 11; i <100; i++){
-				if ((i%10) != 0){
-					appendItem(numberCandidates, i);
-				}
+        function twoByTwo(){
+			numberDigits = 2;
 
             document.getElementById("homeScreen").hidden = true;
             document.getElementById("typeScreen").hidden = false;
-        	}
 		}
 
 		function threeByThree(){
-			for (var i = 101; i<1000; i++){
-				if ((i%10) != 0){
-					appendItem(numberCandidates, i);
-				}
+			numberDigits = 3;
 
             document.getElementById("homeScreen").hidden = true;
             document.getElementById("typeScreen").hidden = false;
-			}
 		}
 
 	function showProblem(type){
-		if (type == "subtraction"){
-			for (var i = 0; i < numberCandidates.length; i++){
+		numberCandidates = [];
+		number1Candidates = [];
+			for (let i = Math.pow(10, numberDigits - 1) + 1; i < Math.pow(10, numberDigits); i++){
+				if ((i%10) != 0){
+					numberCandidates.push(i);
+				}
+			}
+		if (type == 'subtraction'){
+			for (let i = 0; i < numberCandidates.length; i++){
 				if ((numberCandidates[i])%10 == 9){
-					appendItem(number1Candidates, numberCandidates[i]);
+					number1Candidates.push(numberCandidates[i]);
 				}
 			}
 		}
-		else if (type == "factorable"){
-			for (var i = 0; i < numberCandidates.length; i++){
-				for (var factor = 2; factor < 10; factor++){
+		else if (type == 'factorable'){
+			for (let i = 0; i < numberCandidates.length; i++){
+				for (let factor = 2; factor < 10; factor++){
 					if ((numberCandidates[i])%factor == 0){
-						appendItem(number1Candidates, numberCandidates[i]);
+						number1Candidates.push(numberCandidates[i]);
 						break;
 					}
 				}
 			}
+		}
+		else {
+			number1Candidates = numberCandidates;
 		}
 			
 		let number1Index = Math.floor(Math.random()*number1Candidates.length);
