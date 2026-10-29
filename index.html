@@ -33,10 +33,11 @@
     <h1>Mental Math</h1>
 
     <div id="homeScreen">
-        <button onclick="twoByTwo()">2 by 2</button>
-	<button onclick="threeByThree()">3 by 3</button>
+    	<button onclick="twoByTwo()">2 by 2</button>
+		<button onclick="threeByThree()">3 by 3</button>
     </div>
-	<div id = "typeScreen">
+	
+	<div id = "typeScreen" hidden>
 		<button onclick = "showProblem("subtraction")">subtraction</button>
 		<button onclick = "showProblem("factorable")">factorable</button>
 		<button onclick = "showProblem("mixed")">mixed</button>
@@ -55,28 +56,30 @@
     <script>
         let numberCandidates = [];
         let number1Candidates = [];
-	let number1;
-	let number2;
+		let number1;
+		let number2;
 
         function twoByTwo() {
-		for (var i = 11; i <100; i++){
-			if ((i%10) != 0){
-				appendItem(numberCandidates, i);
-			}
+			for (var i = 11; i <100; i++){
+				if ((i%10) != 0){
+					appendItem(numberCandidates, i);
+				}
 
             document.getElementById("homeScreen").hidden = true;
             document.getElementById("typeScreen").hidden = false;
-        }
+        	}
+		}
 
-	function threeByThree(){
-		for (var i = 101; i<1000; i++){
-			if ((i%10) != 0){
-				appendItem(numberCandidates, i);
-			}
+		function threeByThree(){
+			for (var i = 101; i<1000; i++){
+				if ((i%10) != 0){
+					appendItem(numberCandidates, i);
+				}
 
             document.getElementById("homeScreen").hidden = true;
             document.getElementById("typeScreen").hidden = false;
-	}
+			}
+		}
 
 	function showProblem(type){
 		if (type == "subtraction"){
@@ -103,8 +106,9 @@
 		number2 = numberCandidates[number2Index];
 
 		document.getElementById("problem").textContent = number1 + " × " + number2;
-            	document.getElementById("homeScreen").hidden = true;
-            	document.getElementById("practiceScreen").hidden = false;			
+        document.getElementById("typeScreen").hidden = true;
+        document.getElementById("practiceScreen").hidden = false;
+	}
 
         function showAnswer() {
             document.getElementById("answer").textContent =
