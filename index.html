@@ -33,8 +33,14 @@
     <h1>Mental Math</h1>
 
     <div id="homeScreen">
-        <button onclick="startPractice()">2 by 2</button>
+        <button onclick="twoByTwo()">2 by 2</button>
+	<button onclick="threeByThree()">3 by 3</button>
     </div>
+	<div id = "typeScreen">
+		<button onclick = "showProblem("subtraction")">subtraction</button>
+		<button onclick = "showProblem("factorable")">factorable</button>
+		<button onclick = "showProblem("mixed")">mixed</button>
+	</div>
 
     <div id="practiceScreen" hidden>
         <div class="problem" id="problem"></div>
@@ -47,19 +53,58 @@
     </div>
 
     <script>
-        let number1;
-        let number2;
+        let numberCandidates = [];
+        let number1Candidates = [];
+	let number1;
+	let number2;
 
-        function startPractice() {
-            number1 = Math.floor(Math.random() * 90) + 10;
-            number2 = Math.floor(Math.random() * 90) + 10;
-
-            document.getElementById("problem").textContent =
-                number1 + " × " + number2;
+        function twoByTwo() {
+		for (var i = 11; i <100; i++){
+			if ((i%10) != 0){
+				appendItem(numberCandidates, i);
+			}
 
             document.getElementById("homeScreen").hidden = true;
-            document.getElementById("practiceScreen").hidden = false;
+            document.getElementById("typeScreen").hidden = false;
         }
+
+	function threeByThree(){
+		for (var i = 101; i<1000; i++){
+			if ((i%10) != 0){
+				appendItem(numberCandidates, i);
+			}
+
+            document.getElementById("homeScreen").hidden = true;
+            document.getElementById("typeScreen").hidden = false;
+	}
+
+	function showProblem(type){
+		if (type == "subtraction"){
+			for (var i = 0; i < numberCandidates.length; i++){
+				if ((numberCandidates[i])%10 == 9){
+					appendItem(number1Candidates, numberCandidates[i]);
+				}
+			}
+		}
+		else if (type == "factorable"){
+			for (var i = 0; i < numberCandidates.length; i++){
+				for (var factor = 2; factor < 10; factor++){
+					if ((numberCandidates[i])%factor == 0){
+						appendItem(number1Candidates, numberCandidates[i]);
+						break;
+					}
+				}
+			}
+		}
+			
+		let number1Index = Math.floor(Math.random()*number1Candidates.length);
+		let number2Index = Math.floor(Math.random()*numberCandidates.length);
+		number1 = number1Candidates[number1Index];
+		number2 = numberCandidates[number2Index];
+
+		document.getElementById("problem").textContent = number1 + " × " + number2;
+            	document.getElementById("homeScreen").hidden = true;
+            	document.getElementById("practiceScreen").hidden = false;			
 
         function showAnswer() {
             document.getElementById("answer").textContent =
